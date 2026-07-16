@@ -1,1 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Favorite Person ❤️</title>
+    <!-- Cute Rounded Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff85a1;
+            --secondary-color: #fca3b7;
+            --background-start: #ffe5ec;
+            --background-end: #ffc2d1;
+            --text-color: #4a3b42;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Fredoka', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--background-start) 0%, var(--background-end) 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            color: var(--text-color);
+            position: relative;
+        }
+
+        /* Floating Hearts Background */
+        .hearts-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            display: block;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 133, 161, 0.4);
+            transform: rotate(-45deg);
+            bottom: -50px;
+            animation: float 10s infinite linear;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 133, 161, 0.4);
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -10px;
+            left: 0;
+        }
+
+        .heart::after {
+            left: 10px;
+            top: 0;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(-45deg) scale(1);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-110vh) rotate(-45deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Container Card */
+        .card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            width: 90%;
+            max-width: 450px;
+            padding: 30px 24px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(255, 133, 161, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            z-index: 2;
+            text-align: center;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            position: absolute;
+            opacity: 0;
+            transform: scale(0.9) translateY(20px);
+            pointer-events: none;
+            display: none;
+        }
+
+        .card.active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+            display: block;
+            position: relative;
+        }
+
+        /* Headings & Typography */
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #ff5c8a;
+            line-height: 1.4;
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 1.15rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        /* Lock Screen Custom Styles */
+        .dots-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid var(--primary-color);
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .dot.active {
+            background-color: var(--primary-color);
+            transform: scale(1.15);
+        }
+
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            justify-items: center;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+        .key {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            border: none;
+            background: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.1s ease;
+        }
+
+        .key:active {
+            background: var(--primary-color);
+            color: white;
+            transform: scale(0.92);
+        }
+
+        .key.empty {
+            background: transparent;
+            box-shadow: none;
+            pointer-events: none;
+        }
+
+        /* General Buttons */
+        .btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(255, 133, 161, 0.4);
+            transition: all 0.2s ease;
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 133, 161, 0.6);
+            background: #ff7091;
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        /* Love Letter Page Custom Styling */
+        .letter-box {
+            max-height: 400px;
+            overflow-y: auto;
+            text-align: left;
+            padding-right: 10px;
+            margin-bottom: 10px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--secondary-color) transparent;
+        }
+
+        .letter-box::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .letter-box::-webkit-scrollbar-thumb {
+            background-color: var(--secondary-color);
+            border-radius: 10px;
+        }
+
+        /* Error Shake Animation */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-10px); }
+            40%, 80% { transform: translateX(10px); }
+        }
+
+        .shake {
+            animation: shake 0.4s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Background -->
+    <div class="hearts-bg" id="heartsBg"></div>
+
+    <!-- PAGE 1: Lock Screen -->
+    <div class="card active" id="page1">
+        <h2>Enter Password</h2>
+        <div class="dots-container" id="dotsContainer">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="keypad">
+            <button class="key" onclick="pressKey('1')">1</button>
+            <button class="key" onclick="pressKey('2')">2</button>
+            <button class="key" onclick="pressKey('3')">3</button>
+            <button class="key" onclick="pressKey('4')">4</button>
+            <button class="key" onclick="pressKey('5')">5</button>
+            <button class="key" onclick="pressKey('6')">6</button>
+            <button class="key" onclick="pressKey('7')">7</button>
+            <button class="key" onclick="pressKey('8')">8</button>
+            <button class="key" onclick="pressKey('9')">9</button>
+            <button class="key" onclick="clearPin()">C</button>
+            <button class="key" onclick="pressKey('0')">0</button>
+            <button class="key" onclick="backspace()">⌫</button>
+        </div>
+    </div>
+
+    <!-- PAGE 2: Fun Today -->
+    <div class="card" id="page2">
+        <h2>I HAD SO MUCH FUN TODAY BABYYYY. Thankkk youuu for planning itttt 😁😁</h2>
+        <button class="btn" onclick="nextPage(2, 3)">Next ➔</button>
+    </div>
+
+    <!-- PAGE 3: Metro Intro -->
+    <div class="card" id="page3">
+        <p>I wanted to do this when we were alone in metro but 😅</p>
+        <p>I've tried my best to describe what i would have told and how I felt</p>
+        <p style="font-weight: 600; color: #ff5c8a;">Press next to read 🥰</p>
+        <button class="btn" onclick="nextPage(3, 4)">Next ➔</button>
+    </div>
+
+    <!-- PAGE 4: Love Letter -->
+    <div class="card" id="page4" style="max-width: 500px;">
+        <div class="letter-box">
+            <p>Heyyy cutieee. I love you so much. I would have loved to do this in person but it's alright. You're amazing cutie pie. You're ✨✨✨✨. You make me so happyyyy. Ik few days we don't talk and when we do we may not talk properly. Sorry for getting mad whenever you couldn't meet me. I love spending time with you. Sitting next to you looking at your face smiling and pulling your cheeks. I can do that forever and never get bored of it. All the best baby. Have funnn but also be careful. Ik I'll sound like some unc but still. You studied a lot and I'm happy (very very very) you got seat in iitm. Chanag odhko (amel lego kodsbeku marthogbeda). I can't wait to stay with you together in one house. Ik it's still far away but one day. I never wanna tell byee to you and come home alone. Life is so meh without you. I wanna travel and go on trips with you. When I'm with everything feels so nice and perfect. I forget about everything else after looking at my lil baby. Magu thara ne iru. I wanna come home to you jumping around like a toddler and hugging me. I'll buy you as many golgappas as you want. We'll go on late night rides and sit under the stars talking to each other. You're very very very very very very very very important to me. I wanna stay with you forever and make you smile and also annoy you. Idk what i thought I'll tell you in metro but I did wanna hug you tight like a baby. Also i wanted to hug you and listen to your heartbeat. I hate coming back home after meeting you. Chanag niddhe madu. Time ge uta thinnu neer kudi. Your road companion won't be there to help you cross roads. Kushiyag iru. Keep smiling. I'll always be your cutie pie. You'll always be my baby. Ah all this i wouldn't have said in metro okay. I would have probably cried telling if i told all this. I love you so much baby ❤️❤️❤️. Ashte ivathge. Bye bye sweetie pie.</p>
+        </div>
+    </div>
+
+    <script>
+        // --- Floating Hearts Background ---
+        const heartsBg = document.getElementById('heartsBg');
+        const heartCount = 15;
+        
+        for (let i = 0; i < heartCount; i++) {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDelay = Math.random() * 8 + 's';
+            heart.style.animationDuration = (Math.random() * 5 + 7) + 's';
+            const size = Math.random() * 15 + 10;
+            heart.style.width = size + 'px';
+            heart.style.height = size + 'px';
+            heartsBg.appendChild(heart);
+        }
+
+        // --- Password Logic ---
+        const correctPin = "2425";
+        let enteredPin = "";
+        const dots = document.querySelectorAll('.dot');
+        const page1Card = document.getElementById('page1');
+
+        function updateDots() {
+            dots.forEach((dot, index) => {
+                if (index < enteredPin.length) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        function pressKey(num) {
+            if (enteredPin.length < 4) {
+                enteredPin += num;
+                updateDots();
+                
+                if (enteredPin.length === 4) {
+                    // Give a tiny delay for visual feedback of the last dot
+                    setTimeout(checkPin, 250);
+                }
+            }
+        }
+
+        function clearPin() {
+            enteredPin = "";
+            updateDots();
+        }
+
+        function backspace() {
+            enteredPin = enteredPin.slice(0, -1);
+            updateDots();
+        }
+
+        function checkPin() {
+            if (enteredPin === correctPin) {
+                nextPage(1, 2);
+            } else {
+                // Shake effect on error
+                page1Card.classList.add('shake');
+                // Reset Pin
+                enteredPin = "";
+                updateDots();
+                // Remove shake class after animation completes
+                setTimeout(() => {
+                    page1Card.classList.remove('shake');
+                }, 400);
+            }
+        }
+
+        // --- Smooth Page Transitions ---
+        function nextPage(currPageNum, nextPageNum) {
+            const currPage = document.getElementById(`page${currPageNum}`);
+            const nextPage = document.getElementById(`page${nextPageNum}`);
+            
+            // Fade out current page
+            currPage.style.opacity = '0';
+            currPage.style.transform = 'scale(0.9) translateY(-20px)';
+            currPage.style.pointerEvents = 'none';
+            
+            setTimeout(() => {
+                currPage.classList.remove('active');
+                
+                // Set up and fade in next page
+                nextPage.classList.add('active');
+                // Allow browser to register display state before animating in
+                setTimeout(() => {
+                    nextPage.style.opacity = '1';
+                    nextPage.style.transform = 'scale(1) translateY(0)';
+                    nextPage.style.pointerEvents = 'auto';
+                }, 50);
+            }, 500); // Wait for transition duration
+        }
+    </script>
+</body>
+</html>
 
