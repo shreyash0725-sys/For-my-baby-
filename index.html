@@ -10,6 +10,7 @@
         :root {
             --primary-color: #ff85a1;
             --secondary-color: #fca3b7;
+            --accent-color: #ff4d6d;
             --background-start: #ffe5ec;
             --background-end: #ffc2d1;
             --text-color: #4a3b42;
@@ -34,7 +35,7 @@
             position: relative;
         }
 
-        /* Floating Hearts Background */
+        /* Floating Background Hearts */
         .hearts-bg {
             position: absolute;
             top: 0;
@@ -96,21 +97,21 @@
 
         /* Container Card */
         .card {
-            background: rgba(255, 255, 255, 0.75);
+            background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             width: 90%;
-            max-width: 450px;
-            padding: 30px 24px;
-            border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(255, 133, 161, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.6);
+            max-width: 460px;
+            padding: 35px 25px;
+            border-radius: 32px;
+            box-shadow: 0 15px 35px rgba(255, 133, 161, 0.25);
+            border: 2px solid rgba(255, 255, 255, 0.7);
             z-index: 2;
             text-align: center;
-            transition: opacity 0.5s ease, transform 0.5s ease;
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             position: absolute;
             opacity: 0;
-            transform: scale(0.9) translateY(20px);
+            transform: scale(0.9) translateY(30px);
             pointer-events: none;
             display: none;
         }
@@ -125,7 +126,7 @@
 
         /* Headings & Typography */
         h2 {
-            font-size: 1.8rem;
+            font-size: 1.7rem;
             margin-bottom: 20px;
             color: #ff5c8a;
             line-height: 1.4;
@@ -135,11 +136,11 @@
         p {
             font-size: 1.15rem;
             line-height: 1.6;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             font-weight: 400;
         }
 
-        /* Lock Screen Custom Styles */
+        /* Lock Screen Keypad */
         .dots-container {
             display: flex;
             justify-content: center;
@@ -157,7 +158,7 @@
 
         .dot.active {
             background-color: var(--primary-color);
-            transform: scale(1.15);
+            transform: scale(1.2);
         }
 
         .keypad {
@@ -189,16 +190,10 @@
         .key:active {
             background: var(--primary-color);
             color: white;
-            transform: scale(0.92);
+            transform: scale(0.9);
         }
 
-        .key.empty {
-            background: transparent;
-            box-shadow: none;
-            pointer-events: none;
-        }
-
-        /* General Buttons */
+        /* Cute Buttons */
         .btn {
             background: var(--primary-color);
             color: white;
@@ -209,7 +204,7 @@
             border-radius: 25px;
             cursor: pointer;
             box-shadow: 0 6px 15px rgba(255, 133, 161, 0.4);
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             display: inline-block;
             margin-top: 15px;
         }
@@ -224,13 +219,14 @@
             transform: translateY(1px);
         }
 
-        /* Love Letter Page Custom Styling */
+        /* Letter Box scroll styles */
         .letter-box {
-            max-height: 400px;
+            max-height: 380px;
             overflow-y: auto;
             text-align: left;
-            padding-right: 10px;
-            margin-bottom: 10px;
+            padding-right: 12px;
+            margin-bottom: 15px;
+            border-radius: 12px;
             scrollbar-width: thin;
             scrollbar-color: var(--secondary-color) transparent;
         }
@@ -244,7 +240,30 @@
             border-radius: 10px;
         }
 
-        /* Error Shake Animation */
+        /* Smooth scroll hint */
+        .scroll-hint {
+            font-size: 0.9rem;
+            color: #ff7091;
+            margin-top: 8px;
+            font-weight: 600;
+            transition: opacity 0.3s;
+        }
+
+        /* Scroll-locked button transition */
+        .scroll-next-btn {
+            opacity: 0;
+            transform: translateY(10px);
+            pointer-events: none;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .scroll-next-btn.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        /* Lock Screen Shake Animation */
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
             20%, 60% { transform: translateX(-10px); }
@@ -254,14 +273,49 @@
         .shake {
             animation: shake 0.4s ease-in-out;
         }
+
+        /* Beautiful Fading Heart */
+        .heart-container {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .glowing-heart {
+            width: 120px;
+            height: 120px;
+            fill: var(--accent-color);
+            opacity: 0;
+            transform: scale(0.6);
+            filter: drop-shadow(0 0 10px rgba(255, 77, 109, 0.3));
+        }
+
+        #page5.active .glowing-heart {
+            animation: fadeInHeart 4s cubic-bezier(0.4, 0, 0.2, 1) forwards, heartbeat 1.4s infinite alternate 4s;
+        }
+
+        @keyframes fadeInHeart {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes heartbeat {
+            to {
+                transform: scale(1.12);
+                filter: drop-shadow(0 0 20px rgba(255, 77, 109, 0.6));
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Floating Background -->
+    <!-- Sparkly Heart Background -->
     <div class="hearts-bg" id="heartsBg"></div>
 
-    <!-- PAGE 1: Lock Screen -->
+    <!-- PAGE 1: Keypad Lock Screen -->
     <div class="card active" id="page1">
         <h2>Enter Password</h2>
         <div class="dots-container" id="dotsContainer">
@@ -292,33 +346,56 @@
         <button class="btn" onclick="nextPage(2, 3)">Next ➔</button>
     </div>
 
-    <!-- PAGE 3: Metro Intro -->
+    <!-- PAGE 3: Metro Setup -->
     <div class="card" id="page3">
-        <p>I wanted to do this when we were alone in metro but 😅</p>
+        <p>I wanted to this when we were alone in metro but 😅</p>
         <p>I've tried my best to describe what i would have told and how I felt</p>
         <p style="font-weight: 600; color: #ff5c8a;">Press next to read 🥰</p>
         <button class="btn" onclick="nextPage(3, 4)">Next ➔</button>
     </div>
 
-    <!-- PAGE 4: Love Letter -->
-    <div class="card" id="page4" style="max-width: 500px;">
-        <div class="letter-box">
+    <!-- PAGE 4: Long Love Letter with scroll lock -->
+    <div class="card" id="page4" style="max-width: 480px;">
+        <div class="letter-box" id="letterBox">
             <p>Heyyy cutieee. I love you so much. I would have loved to do this in person but it's alright. You're amazing cutie pie. You're ✨✨✨✨. You make me so happyyyy. Ik few days we don't talk and when we do we may not talk properly. Sorry for getting mad whenever you couldn't meet me. I love spending time with you. Sitting next to you looking at your face smiling and pulling your cheeks. I can do that forever and never get bored of it. All the best baby. Have funnn but also be careful. Ik I'll sound like some unc but still. You studied a lot and I'm happy (very very very) you got seat in iitm. Chanag odhko (amel lego kodsbeku marthogbeda). I can't wait to stay with you together in one house. Ik it's still far away but one day. I never wanna tell byee to you and come home alone. Life is so meh without you. I wanna travel and go on trips with you. When I'm with everything feels so nice and perfect. I forget about everything else after looking at my lil baby. Magu thara ne iru. I wanna come home to you jumping around like a toddler and hugging me. I'll buy you as many golgappas as you want. We'll go on late night rides and sit under the stars talking to each other. You're very very very very very very very very important to me. I wanna stay with you forever and make you smile and also annoy you. Idk what i thought I'll tell you in metro but I did wanna hug you tight like a baby. Also i wanted to hug you and listen to your heartbeat. I hate coming back home after meeting you. Chanag niddhe madu. Time ge uta thinnu neer kudi. Your road companion won't be there to help you cross roads. Kushiyag iru. Keep smiling. I'll always be your cutie pie. You'll always be my baby. Ah all this i wouldn't have said in metro okay. I would have probably cried telling if i told all this. I love you so much baby ❤️❤️❤️. Ashte ivathge. Bye bye sweetie pie.</p>
         </div>
+        <div class="scroll-hint" id="scrollHint">Scroll down to finish reading... 👇</div>
+        <button class="btn scroll-next-btn" id="letterNextBtn" onclick="nextPage(4, 5)">Next ➔</button>
+    </div>
+
+    <!-- PAGE 5: Proud of you baby -->
+    <div class="card" id="page5">
+        <h2>PROUD OF YOU BABY</h2>
+        <div class="heart-container">
+            <svg class="glowing-heart" viewBox="0 0 32 32">
+                <path d="M16 28.5C16 28.5 2 20.5 2 11.5C2 6.5 6 2.5 11 2.5C14 2.5 15.5 4.5 16 5.5C16.5 4.5 18 2.5 21 2.5C26 2.5 30 6.5 30 11.5C30 20.5 16 28.5 16 28.5Z"/>
+            </svg>
+        </div>
+        <button class="btn" onclick="nextPage(5, 6)">Next ➔</button>
+    </div>
+
+    <!-- PAGE 6: Apology Letter -->
+    <div class="card" id="page6" style="max-width: 480px;">
+        <h2 style="font-size: 2.2rem; margin-bottom: 15px;">Sorryyy 😭😭😭😭😭😭😭😭</h2>
+        <p style="font-size: 1.25rem; font-weight: 500; margin-bottom: 25px;">
+            Will always compete for second place when playing with you from now 😭
+        </p>
+        <p style="font-size: 1.4rem; font-weight: 600; color: var(--accent-color);">
+            Maphh kardhooo malkinnn jiii ❤️
+        </p>
     </div>
 
     <script>
-        // --- Floating Hearts Background ---
+        // --- Dynamic Heart Background Sparkles ---
         const heartsBg = document.getElementById('heartsBg');
-        const heartCount = 15;
-        
-        for (let i = 0; i < heartCount; i++) {
+        const totalHearts = 16;
+        for (let i = 0; i < totalHearts; i++) {
             const heart = document.createElement('div');
             heart.classList.add('heart');
             heart.style.left = Math.random() * 100 + 'vw';
             heart.style.animationDelay = Math.random() * 8 + 's';
             heart.style.animationDuration = (Math.random() * 5 + 7) + 's';
-            const size = Math.random() * 15 + 10;
+            const size = Math.random() * 15 + 12;
             heart.style.width = size + 'px';
             heart.style.height = size + 'px';
             heartsBg.appendChild(heart);
@@ -346,7 +423,6 @@
                 updateDots();
                 
                 if (enteredPin.length === 4) {
-                    // Give a tiny delay for visual feedback of the last dot
                     setTimeout(checkPin, 250);
                 }
             }
@@ -366,24 +442,34 @@
             if (enteredPin === correctPin) {
                 nextPage(1, 2);
             } else {
-                // Shake effect on error
                 page1Card.classList.add('shake');
-                // Reset Pin
                 enteredPin = "";
                 updateDots();
-                // Remove shake class after animation completes
                 setTimeout(() => {
                     page1Card.classList.remove('shake');
                 }, 400);
             }
         }
 
-        // --- Smooth Page Transitions ---
+        // --- Scroll-to-Bottom Logic for Page 4 ---
+        const letterBox = document.getElementById('letterBox');
+        const letterNextBtn = document.getElementById('letterNextBtn');
+        const scrollHint = document.getElementById('scrollHint');
+
+        letterBox.addEventListener('scroll', () => {
+            // Check if scroll reached close to the bottom
+            const distanceToBottom = letterBox.scrollHeight - letterBox.scrollTop - letterBox.clientHeight;
+            if (distanceToBottom < 25) {
+                letterNextBtn.classList.add('visible');
+                scrollHint.style.opacity = '0';
+            }
+        });
+
+        // --- Smooth Transition Logic ---
         function nextPage(currPageNum, nextPageNum) {
             const currPage = document.getElementById(`page${currPageNum}`);
             const nextPage = document.getElementById(`page${nextPageNum}`);
             
-            // Fade out current page
             currPage.style.opacity = '0';
             currPage.style.transform = 'scale(0.9) translateY(-20px)';
             currPage.style.pointerEvents = 'none';
@@ -391,17 +477,20 @@
             setTimeout(() => {
                 currPage.classList.remove('active');
                 
-                // Set up and fade in next page
                 nextPage.classList.add('active');
-                // Allow browser to register display state before animating in
                 setTimeout(() => {
                     nextPage.style.opacity = '1';
                     nextPage.style.transform = 'scale(1) translateY(0)';
                     nextPage.style.pointerEvents = 'auto';
                 }, 50);
-            }, 500); // Wait for transition duration
+            }, 600);
         }
     </script>
 </body>
 </html>
 
+
+            
+
+            
+        
